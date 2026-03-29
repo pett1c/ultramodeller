@@ -56,7 +56,7 @@ if you want to modify the program or compile it yourself:
 ### local launch
 ```bash
 # Clone a repository
-git clone [https://github.com/pett1c/ultramodeller.git](https://github.com/pett1c/ultramodeller.git)
+git clone https://github.com/pett1c/ultramodeller.git
 cd YOUR_REPOSITORY
 
 # install dependencies
