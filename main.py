@@ -30,16 +30,24 @@ def get_base_dir():
 class Logger:
     def __init__(self, log_file="launcher.log"):
         self.log_file = log_file
+        self.status_label = None
         with open(self.log_file, "w", encoding="utf-8") as f:
-            f.write(f"--- Starting launcher: {datetime.datetime.now()}\n")  
+            f.write(f"--- Starting launcher: {datetime.datetime.now()}\n") 
+
+    def set_display(self, label_widget):
+        self.status_label = label_widget
 
     def log(self, message):
         timestamp = datetime.datetime.now().strftime("%H:%M:%S")
         log_msg = f"[{timestamp}] {message}"
-        print(log_msg)
 
         with open(self.log_file, "a", encoding="utf-8") as f:
             f.write(log_msg + "\n")
+        
+        print(log_msg)
+
+        if self.status_label:
+            self.status_label.configure(text=message)
 
 class KnifeManager:
     def __init__(self, mdl_folder, cstrike_folder, logger):
@@ -164,6 +172,18 @@ class LauncherGUI(ctk.CTk):
     def build_bottom_bar(self):
         self.bottom_bar = ctk.CTkFrame(self, height=50, corner_radius=5)
         self.bottom_bar.pack(side="bottom", fill="x", padx=10, pady=10)
+
+        self.status_display = ctk.CTkLabel(
+            self.bottom_bar,
+            text="System ready.",
+            font=("Arial", 12, "italic"),
+            text_color="green",
+            wraplength=500,
+            justify="center"
+        )
+        self.status_display.pack(side="top", pady=(5, 0))
+
+        self.logger.set_display(self.status_display)
 
         ctk.CTkButton(self.bottom_bar, text="Apply default mdl", command=self.knife_manager.apply_default_mdl).pack(side="left", padx=10, pady=10)
         
