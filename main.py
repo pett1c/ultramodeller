@@ -139,7 +139,7 @@ class LauncherGUI(ctk.CTk):
         self.game_launcher = game_launcher
         self.logger = logger
 
-        self.title("Ultramodeller 1.0.0")
+        self.title("Ultramodeller 1.0.1")
         self.geometry("640x480")
         ctk.set_default_color_theme("themes/marsh.json")
 
