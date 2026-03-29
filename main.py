@@ -141,7 +141,7 @@ class LauncherGUI(ctk.CTk):
 
         self.title("Knife Manager")
         self.geometry("640x480")
-        ctk.set_default_color_theme("dark-blue")
+        ctk.set_default_color_theme("themes/marsh.json")
 
         self.current_view = "grid"
         self.selected_knife = None
@@ -173,24 +173,41 @@ class LauncherGUI(ctk.CTk):
         self.bottom_bar = ctk.CTkFrame(self, height=50, corner_radius=5)
         self.bottom_bar.pack(side="bottom", fill="x", padx=10, pady=10)
 
+        self.bottom_bar.columnconfigure(0, weight=1)
+        self.bottom_bar.columnconfigure(1, weight=1)
+        self.bottom_bar.columnconfigure(2, weight=1)
+
         self.status_display = ctk.CTkLabel(
             self.bottom_bar,
             text="System ready.",
             font=("Arial", 12, "italic"),
             text_color="green",
-            wraplength=500,
-            justify="center"
+            wraplength=500
         )
-        self.status_display.pack(side="top", pady=(5, 0))
-
+        self.status_display.grid(row=0, column=0, columnspan=3, pady=(10, 5), sticky="ew")
         self.logger.set_display(self.status_display)
 
-        ctk.CTkButton(self.bottom_bar, text="Apply default mdl", command=self.knife_manager.apply_default_mdl).pack(side="left", padx=10, pady=10)
+        btn_default =ctk.CTkButton(
+            self.bottom_bar,
+            text="Apply default mdl",
+            command=self.knife_manager.apply_default_mdl
+        )
+        btn_default.grid(row=1, column=0, padx=20, pady=10, sticky="w")
         
-        self.apply_button = ctk.CTkButton(self.bottom_bar, text="Apply model", state="disabled", command=self.on_apply_model)
-        self.apply_button.pack(padx=10, pady=10)
+        self.apply_button = ctk.CTkButton(
+            self.bottom_bar,
+            text="Apply model",
+            state="disabled",
+            command=self.on_apply_model
+        )
+        self.apply_button.grid(row=1, column=1, padx=20, pady=10, sticky="")
 
-        ctk.CTkButton(self.bottom_bar, text="Start CS 1.6", command=self.game_launcher.start_game).pack(side="right", padx=10, pady=10)
+        btn_start = ctk.CTkButton(
+            self.bottom_bar,
+            text="Start CS 1.6",
+            command=self.game_launcher.start_game
+        )
+        btn_start.grid(row=1, column=2, padx=20, pady=10, sticky="e")
     
     def build_grid_view(self):
         self.knives_grid = ctk.CTkScrollableFrame(self, corner_radius=5)
