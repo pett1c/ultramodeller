@@ -139,7 +139,7 @@ class LauncherGUI(ctk.CTk):
         self.game_launcher = game_launcher
         self.logger = logger
 
-        self.title("Knife Manager")
+        self.title("Ultramodeller 1.0.0")
         self.geometry("640x480")
         ctk.set_default_color_theme("themes/marsh.json")
 
@@ -273,7 +273,7 @@ class LauncherGUI(ctk.CTk):
 def find_cstrike_folder(logger):
     config = load_config()
     if not config["cstrike_folder"] or not os.path.exists(config["cstrike_folder"]):
-        chosen_dir = filedialog.askdirectory(title="Select your cstrike/models folder")
+        chosen_dir = filedialog.askdirectory(title="Select your cstrike\\models folder")
         if chosen_dir:
             config["cstrike_folder"] = chosen_dir
             save_config(chosen_dir)
