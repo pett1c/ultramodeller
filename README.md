@@ -2,7 +2,7 @@
 
 # 🔪 Ultramodeller – CS 1.6 Knife Model Manager
 
-![ultramodeller_screenshot](https://files.catbox.moe/rlza1t.png)
+![ultramodeller_screenshot](https://files.catbox.moe/bocvqm.png)
 
 [![python version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
 [![release](https://img.shields.io/badge/release-v1.0.0-success.svg)](https://github.com/pett1c/ultramodeller/releases)
