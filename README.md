@@ -77,7 +77,7 @@ python -m PyInstaller --noconsole --onefile --collect-all customtkinter main.py
 ```
 
 the finished `.exe` file will appear in the `dist/` folder.
-**IMPORTANT!** copy the `mdls/` folder to the `dist/` for the executable to work correctly.
+**IMPORTANT!** copy `mdls/` and `themes/` folder to the `dist/` for the executable to work correctly.
 
 ---
 
