@@ -45,7 +45,7 @@ in the future, i plan to implement an editor for easy uploading skins to the app
 
 ---
 
-## 💻 ・ for developers
+## 💻 ・ installation and usage (for developers)
 
 if you want to modify the program or compile it yourself:
 
