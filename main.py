@@ -1,9 +1,31 @@
 import datetime
 import customtkinter as ctk
+from customtkinter import filedialog
 from PIL import Image
 import os
 import shutil
 import webbrowser
+import sys
+import json
+import subprocess
+
+CONFIG_FILE = "config.json"
+
+def load_config():
+    if os.path.exists(CONFIG_FILE):
+        with open(CONFIG_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return {"cstrike_folder": ""}
+
+def save_config(path):
+    with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+        json.dump({"cstrike_folder": path}, f, indent=4)
+
+def get_base_dir():
+    if getattr(sys, 'frozen', False):
+        return os.path.dirname(sys.executable)
+    else:
+        return os.path.dirname(os.path.abspath(__file__))
 
 class Logger:
     def __init__(self, log_file="launcher.log"):
@@ -50,7 +72,7 @@ class KnifeManager:
     
     def apply_mdl(self, mdlpath):
         if mdlpath:
-            target_path = os.path.join(self.cstrike_folder, "v_knife.mdl")
+            target_path = os.path.normpath(os.path.join(self.cstrike_folder, "v_knife.mdl"))
 
             try:
                 shutil.copy2(mdlpath, target_path)
@@ -66,9 +88,40 @@ class KnifeManager:
         self.apply_mdl(default_mdl_path)
     
 class GameLauncher:
+    def __init__(self, cstrike_folder, logger):
+        self.cstrike_folder = cstrike_folder
+        self.logger = logger
+
+
     def start_game(self):
-        print("Starting game...")
-        webbrowser.open("steam://rungameid/10")
+        if not self.cstrike_folder:
+            self.logger.log("Error: cstrike folder not set.")
+            return
+        
+        self.logger.log("Starting Counter-Strike 1.6...")
+
+        if "steamapps" in self.cstrike_folder.lower():
+            self.logger.log("Detected Steam installation. Attempting to launch via Steam URL...")
+            webbrowser.open("steam://rungameid/10")
+        else:
+            self.logger.log("Detected Non-Steam installation. Attempting to launch via executable...")
+            game_root = os.path.dirname(os.path.dirname(self.cstrike_folder))
+            
+            executables = ['hl.exe', 'cs.exe']
+            found_exe = None
+
+            for exe_name in executables:
+                path = os.path.join(game_root, exe_name)
+                if os.path.exists(path):
+                    found_exe = path
+                    break
+            
+            if found_exe:
+                self.logger.log(f"Launching Non-Steam from {found_exe}...")
+                subprocess.Popen([found_exe, "-game", "cstrike"], cwd=game_root)
+            else:
+                self.logger.log(f"Error: Executable ({', '.join(executables)}) not found in {game_root}.")
+
 
 class LauncherGUI(ctk.CTk):
     def __init__(self, knife_manager, game_launcher, logger):
@@ -92,6 +145,7 @@ class LauncherGUI(ctk.CTk):
         self.initialize_app()
     
     def initialize_app(self):
+
         self.knife_manager.scan_mdls()
         
         for item in self.knife_manager.available_knives:
@@ -179,13 +233,26 @@ class LauncherGUI(ctk.CTk):
     def run(self):
         self.mainloop()
 
-if __name__ == "__main__":
-    mdl_folder = r"D:\Other\proj\ultramodeller\mdls"
-    cstrike_folder = r"D:\Games\Steam\steamapps\common\Half-Life\cstrike\models"
+def find_cstrike_folder(logger):
+    config = load_config()
+    if not config["cstrike_folder"] or not os.path.exists(config["cstrike_folder"]):
+        chosen_dir = filedialog.askdirectory(title="Select your cstrike/models folder")
+        if chosen_dir:
+            config["cstrike_folder"] = chosen_dir
+            save_config(chosen_dir)
+        else:
+            logger.log("No cstrike folder selected.")
+    cstrike_folder = config["cstrike_folder"]
+    return cstrike_folder
 
+if __name__ == "__main__":
     logger = Logger()
+
+    mdl_folder = os.path.join(get_base_dir(), "mdls")
+    cstrike_folder = find_cstrike_folder(logger)
+    
     knife_manager = KnifeManager(mdl_folder, cstrike_folder, logger)
-    game_launcher = GameLauncher()
+    game_launcher = GameLauncher(cstrike_folder, logger)
 
     gui = LauncherGUI(knife_manager, game_launcher, logger)
     gui.run()
