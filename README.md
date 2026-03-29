@@ -5,7 +5,7 @@
 ![ultramodeller_screenshot](https://files.catbox.moe/bocvqm.png)
 
 [![python version](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
-[![release](https://img.shields.io/badge/release-v1.0.0-success.svg)](https://github.com/pett1c/ultramodeller/releases)
+[![release](https://img.shields.io/badge/release-v1.1.0-success.svg)](https://github.com/pett1c/ultramodeller/releases)
 [![license: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 *a simple and quick graphical launcher for managing knife models in counter-strike 1.6.*
@@ -18,11 +18,11 @@
 **Ultramodeller** is a lightweight application designed to free you from manually copying `.mdl` files once and for all. The program offers a user-friendly visual interface for viewing and installing custom knife skins (it works with both Steam and non-Steam versions of the game).
 
 ## 🔑 ・ key features
-* **visual gallery:** Preview knives right in the app before installing them.
-* **one-click installation:** Forget about searching for the `cstrike/models` folder. The program handles everything automatically.
-* **smart launch:** Automatic game version detection (launch via Steam or directly via `hl.exe` or `cs.exe`).
-* **safe rollback:** Instantly revert to the classic knife model with the `Apply default mdl` button.
-* **built-in logging:** Display operation status directly in the app interface.
+* **visual gallery:** preview knives right in the app before installing them.
+* **one-click installation:** forget about searching for the `cstrike/models` folder. The program handles everything automatically.
+* **smart launch:** automatic game version detection (launch via Steam or directly via `hl.exe` or `cs.exe`).
+* **safe rollback:** instantly revert to the classic knife model with the `Apply default mdl` button.
+* **built-in logging:** display operation status directly in the app interface.
 
 ---
 
@@ -41,8 +41,6 @@ the program automatically scans the `mdls` folder located in the application's r
 3. place a preview image there as well (in `.png` format).
 4. restart the application — the new knife will automatically appear in the grid!
 
-in the future, i plan to implement an editor for easy uploading skins to the app from within the app, support for other image formats, and support for `p_knife.mdl` & `w_knife.mdl` models and sounds.
-
 ---
 
 ## 💻 ・ installation and usage (for developers)
@@ -50,8 +48,8 @@ in the future, i plan to implement an editor for easy uploading skins to the app
 if you want to modify the program or compile it yourself:
 
 ### requirements
-* Python 3.10 or later
-* Dependencies listed in `requirements.txt`
+* python 3.10 or later
+* dependencies listed in `requirements.txt`
 
 ### local launch
 ```bash
@@ -86,6 +84,7 @@ the finished `.exe` file will appear in the `dist/` folder.
 * creating, viewing, editing, and deleting **(CRUD)** folders for knives & the ability to favorite individual models/folders.
 * settings, such as configuring the path to models directly within the app `(cstrike_folder, mdl_folder)`, and other settings.
 * a full-featured editor for creating, viewing, editing, and deleting **(CRUD)** models directly within the app.
+* support for other image formats, and support for `p_knife.mdl` & `w_knife.mdl` models and sounds
 
 ## 📄 ・ license
 this project is distributed under the **MIT** License. for details, see the **[LICENSE](https://github.com/pett1c/ultramodeller/blob/main/LICENSE)** file.
