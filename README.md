@@ -60,7 +60,7 @@ git clone [https://github.com/pett1c/ultramodeller.git](https://github.com/pett1
 cd YOUR_REPOSITORY
 
 # install dependencies
-pip install requirements.txt
+pip install -r requirements.txt
 
 # launch the app
 python main.py
